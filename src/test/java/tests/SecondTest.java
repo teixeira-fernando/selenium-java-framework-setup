@@ -3,14 +3,12 @@ package tests;
 import base.TestBase;
 import helpers.DriverFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.testng.ITestResult;
-import org.testng.Reporter;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
-import java.net.MalformedURLException;
-
-public class FirstTest extends TestBase{
+public class SecondTest extends TestBase{
 
     @Test
     public void test1() {
@@ -18,7 +16,7 @@ public class FirstTest extends TestBase{
     }
 
     @Test
-    public void test2(){
+    public void test12(){
         driver.get("https://www.globo.com");
     }
 

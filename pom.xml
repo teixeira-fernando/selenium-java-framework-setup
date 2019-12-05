@@ -54,7 +54,7 @@
                     <reportFormat>plain</reportFormat>
                     <systemPropertyVariables>
                         <browser>chrome</browser>
-                        <remoteExecution>true</remoteExecution>>
+                        <remoteExecution>false</remoteExecution>>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

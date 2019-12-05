@@ -11,41 +11,32 @@ import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 
 public class TestBase {
 
-    protected String browser;
     protected WebDriver driver;
 
-    @Parameters("browser")
-    @BeforeSuite
-    public void getBrowser(String browser){
-        this.browser = browser;
+    @BeforeClass
+    public void setup()  {
+        driver =  new DriverFactory().InitializeDriver();
+    }
+
+    @AfterClass
+    public void closeBrowser(){
+        driver.quit();
     }
 
     @AfterMethod
-    public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
+    public void takeScreenShotOnFailure(ITestResult testResult) {
         if (testResult.getStatus() == ITestResult.FAILURE) {
             File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             try{
-                Files.move(screenshot, new File("resources/screenshots/" + testResult.getName() + ".jpg"));
+                Files.move(screenshot, new File("resources/screenshots/" + testResult.getName() + " " +new Timestamp(System.currentTimeMillis())+".jpg"));
             }
             catch (IOException e){
                 e.printStackTrace();
             }
         }
     }
-
-//    @Ignore
-//    public void takeScreenshotOnFailure(ITestResult testResult, WebDriver driver){
-//        if (testResult.getStatus() == ITestResult.FAILURE) {
-//            File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-//            try{
-//                Files.move(screenshot, new File("resources/screenshots/" + testResult.getName() + ".jpg"));
-//            }
-//            catch (IOException e){
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 }

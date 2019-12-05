@@ -14,16 +14,23 @@ import java.net.URL;
 public class DriverFactory {
 
     private WebDriver driver;
+    private String browser = System.getProperty("browser");
+    private boolean remoteExecution = Boolean.valueOf(System.getProperty("remoteExecution"));
 
-    public WebDriver InitializeDriver(String browser) throws MalformedURLException {
-        if(Boolean.valueOf(System.getProperty("remoteExecution")) == true) {
-            DesiredCapabilities capabilities = null;
-            if(browser.toLowerCase().equals("chrome")){
-                capabilities = DesiredCapabilities.chrome();
-            } else if (browser.toLowerCase().equals("firefox")) {
-                capabilities = DesiredCapabilities.firefox();
+    public WebDriver InitializeDriver() {
+        if(remoteExecution == true) {
+            try {
+                DesiredCapabilities capabilities = null;
+                if (browser.toLowerCase().equals("chrome")) {
+                    capabilities = DesiredCapabilities.chrome();
+                } else if (browser.toLowerCase().equals("firefox")) {
+                    capabilities = DesiredCapabilities.firefox();
+                }
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
             }
-            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+            catch (MalformedURLException e){
+                e.printStackTrace();
+            }
         }
         else {
             if (browser.toLowerCase().equals("chrome")) {
