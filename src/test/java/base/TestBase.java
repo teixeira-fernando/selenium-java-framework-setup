@@ -7,6 +7,14 @@ import org.testng.annotations.*;
 
 public class TestBase {
 
+    protected String browser;
+
+    @Parameters("browser")
+    @BeforeSuite
+    public void getBrowser(String browser){
+        this.browser = browser;
+    }
+
     @BeforeMethod
     public void SetupTest()
     {
