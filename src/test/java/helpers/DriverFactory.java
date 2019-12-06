@@ -1,13 +1,11 @@
 package helpers;
 
-import com.sun.jndi.toolkit.url.Uri;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -18,17 +16,18 @@ public class DriverFactory {
     private boolean remoteExecution = Boolean.valueOf(System.getProperty("remoteExecution"));
     private String serverURL = "http://localhost:4444/wd/hub";
     private String baseURL = "http://google.com/";
+    private ChromeOptions chromeOptions = new ChromeOptions();
+    private FirefoxOptions firefoxOptions = new FirefoxOptions();
+
 
     public WebDriver InitializeDriver() {
         if(remoteExecution == true) {
             try {
-                DesiredCapabilities capabilities = null;
                 if (browser.toLowerCase().equals("chrome")) {
-                    capabilities = DesiredCapabilities.chrome();
+                    driver = new RemoteWebDriver(new URL(serverURL), chromeOptions);
                 } else if (browser.toLowerCase().equals("firefox")) {
-                    capabilities = DesiredCapabilities.firefox();
+                    driver = new RemoteWebDriver(new URL(serverURL), firefoxOptions);
                 }
-                driver = new RemoteWebDriver(new URL(serverURL), capabilities);
             }
             catch (MalformedURLException e){
                 e.printStackTrace();
@@ -41,21 +40,19 @@ public class DriverFactory {
                 } else {
                     System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
                 }
-                driver = new ChromeDriver();
+
+                driver = new ChromeDriver(chromeOptions);
             } else if (browser.toLowerCase().equals("firefox")) {
                 if (System.getProperty("os.name").contains("Windows")) {
                     System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
                 } else {
                     System.setProperty("webdriver.gecko.driver", "resources/geckodriver");
                 }
-                driver = new FirefoxDriver();
+                driver = new FirefoxDriver(firefoxOptions);
             }
         }
-
         driver.manage().window().maximize();
         driver.get(baseURL);
         return driver;
     }
 }
-
-
