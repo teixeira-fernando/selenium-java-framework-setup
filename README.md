@@ -11,3 +11,13 @@ Architecture for using Selenium with Java
 > docker-compose up -d
 
 * after that you can execute your tests remotely in containers
+
+This project is configured to create reports with allure reporting. After executing the tests, 
+it generates resources in the folder target/allure-results.
+
+You can install Allure with just a few commands. For instructions of how to install 
+for your operating system, visit the following link: https://docs.qameta.io/allure/#_installing_a_commandline
+
+To generate the visual allure report, execute the following command:
+
+> allure serve target/allure-results

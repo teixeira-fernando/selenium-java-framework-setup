@@ -2,6 +2,10 @@ package base;
 
 import com.google.common.io.Files;
 import helpers.DriverFactory;
+import io.qameta.allure.Allure;
+import io.qameta.allure.AllureConstants;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.testng.AllureTestNg;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.OutputType;
@@ -21,7 +25,6 @@ public class TestBase {
 
     protected WebDriver driver;
     protected Logger logger = null;
-
 
     @BeforeClass
     public void setup()  {
@@ -43,6 +46,8 @@ public class TestBase {
             logger.debug("The test '"+ testResult.getName() + "' has failed  and the driver logs has been saved for analysis");
             logger.error(testResult.getThrowable().getMessage());
             File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            saveScreenshotInBytes();
+            Allure.addAttachment("Error Log message", testResult.getThrowable().getMessage());
             try{
                 Files.move(screenshot, new File("resources/screenshots/" + testResult.getName() + " " +new Timestamp(System.currentTimeMillis())+".jpg"));
                 logger.error("Screenshot was saved!");
@@ -52,5 +57,10 @@ public class TestBase {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Attachment(value = "Error Page Screenshot", type = "image/png")
+    private byte[] saveScreenshotInBytes(){
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
 }

@@ -11,6 +11,7 @@
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <aspectj.version>1.8.10</aspectj.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,13 @@
             <version>1.2.17</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.13.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -54,14 +62,25 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <parallel>methods</parallel>
                     <threadCount>10</threadCount>
                     <reportFormat>plain</reportFormat>
                     <systemPropertyVariables>
                         <browser>chrome</browser>
-                        <remoteExecution>false</remoteExecution>>
+                        <remoteExecution>false</remoteExecution>
+                        <allure.results.directory>target/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
