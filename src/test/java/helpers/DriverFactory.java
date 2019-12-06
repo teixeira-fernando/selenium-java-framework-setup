@@ -16,6 +16,8 @@ public class DriverFactory {
     private WebDriver driver;
     private String browser = System.getProperty("browser");
     private boolean remoteExecution = Boolean.valueOf(System.getProperty("remoteExecution"));
+    private String serverURL = "http://localhost:4444/wd/hub";
+    private String baseURL = "http://google.com/";
 
     public WebDriver InitializeDriver() {
         if(remoteExecution == true) {
@@ -26,7 +28,7 @@ public class DriverFactory {
                 } else if (browser.toLowerCase().equals("firefox")) {
                     capabilities = DesiredCapabilities.firefox();
                 }
-                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+                driver = new RemoteWebDriver(new URL(serverURL), capabilities);
             }
             catch (MalformedURLException e){
                 e.printStackTrace();
@@ -51,6 +53,7 @@ public class DriverFactory {
         }
 
         driver.manage().window().maximize();
+        driver.get(baseURL);
         return driver;
     }
 }

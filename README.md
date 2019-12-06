@@ -7,3 +7,7 @@ Architecture for using Selenium with Java
     
 (Obs: It's not necessary to use the testng.xml file, after configuring using maven)
 
+* To start the selenium grid, using docker-compose file, execute the following comand:
+> docker-compose up -d
+
+* after that you can execute your tests remotely in containers
