@@ -1,30 +1,37 @@
 package base;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import helpers.DriverFactory;
 import io.qameta.allure.Allure;
-import io.qameta.allure.AllureConstants;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.testng.AllureTestNg;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.logging.LogEntry;
-import org.openqa.selenium.logging.LogType;
 import org.testng.ITestResult;
-import org.testng.TestNG;
 import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 public class TestBase {
 
     protected WebDriver driver;
     protected Logger logger = null;
+
+    @BeforeSuite
+    public void beforeSuite(){
+        allureEnvironmentWriter(
+                ImmutableMap.<String, String>builder()
+                        .put("Browser", System.getProperty("browser"))
+                        .put("BaseUrl", "http://google.com")
+                        .put("RemoteExecution", System.getProperty("remoteExecution"))
+                        .build());
+    }
 
     @BeforeClass
     public void setup()  {

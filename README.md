@@ -23,3 +23,5 @@ To generate the visual allure report, execute the following command:
 > allure serve target/allure-results
 
 One of the interesting features of Allure Report is that you can build the report, not only with the last test execution data, but with the historical data from the past execution. By this way, it has some features, like for example, automatically tag as "broken", tests that has failed many times, or tag as "flaky", tests that has failed sometimes and passed sometimes. Also, it can be integrated with pipeline tools, like Jenkins.
+
+To write the environment variables into the report, I used this library: https://github.com/AutomatedOwl/allure-environment-writer
