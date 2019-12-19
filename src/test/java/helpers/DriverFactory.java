@@ -36,17 +36,17 @@ public class DriverFactory {
         else {
             if (browser.toLowerCase().equals("chrome")) {
                 if (System.getProperty("os.name").contains("Windows")) {
-                    System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
+                    System.setProperty("webdriver.chrome.driver", "resources/drivers/chromedriver.exe");
                 } else {
-                    System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
+                    System.setProperty("webdriver.chrome.driver", "resources/drivers/chromedriver");
                 }
 
                 driver = new ChromeDriver(chromeOptions);
             } else if (browser.toLowerCase().equals("firefox")) {
                 if (System.getProperty("os.name").contains("Windows")) {
-                    System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
+                    System.setProperty("webdriver.gecko.driver", "resources/drivers/geckodriver.exe");
                 } else {
-                    System.setProperty("webdriver.gecko.driver", "resources/geckodriver");
+                    System.setProperty("webdriver.gecko.driver", "resources/drivers/geckodriver");
                 }
                 driver = new FirefoxDriver(firefoxOptions);
             }
