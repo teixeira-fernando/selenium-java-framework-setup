@@ -6,28 +6,23 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import org.openqa.selenium.By;
 import org.testng.annotations.*;
+import pages.GoogleHomePage;
 
 @Feature("First Test")
 public class FirstTest extends TestBase{
 
+    GoogleHomePage homePage;
+
     @BeforeClass
-    public void setup(){
+    public void setup()  {
         super.setup();
-        Allure.suite("Test 1");
+        homePage = new GoogleHomePage(driver);
     }
 
     @Test
     @Description("First Test - Test 1")
     public void test1() {
-        driver.get("https://www.google.com");
-        driver.findElement(By.id("abc"));
+        homePage.performASearch("Automated Test");
     }
-
-    @Test
-    @Description("First Test - Test 2")
-    public void test2(){
-        driver.get("https://www.globo.com");
-    }
-
 
 }
